@@ -10,7 +10,7 @@ func main() {
 	startTime := time.Now()
 
 	startUrl := "https://en.wikipedia.org/wiki/Computer_programming"
-	endUrl := "https://en.wikipedia.org/wiki/Google"
+	endUrl := "https://en.wikipedia.org/wiki/Blade_Runner"
 	path, _ := impl.FindPath(startUrl, endUrl)
 
 	elapsed := time.Since(startTime)

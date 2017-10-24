@@ -8,9 +8,12 @@ import (
 	"strings"
 )
 
-func crawl(urlToVisit *url.URL, ch chan *url.URL) {
-	defer close(ch)
+type UrlWithParent struct {
+	Url       *url.URL
+	ParentUrl *url.URL
+}
 
+func crawl(urlToVisit *url.URL, ch chan UrlWithParent) {
 	fmt.Printf("Crawling URL: %s\n", urlToVisit.String())
 	resp, err := http.Get(urlToVisit.String())
 	if err != nil {
@@ -35,7 +38,7 @@ func crawl(urlToVisit *url.URL, ch chan *url.URL) {
 					if attribute.Key == "href" {
 						absoluteUrl := getAbsoluteUrl(urlToVisit, attribute.Val)
 						if isEnWikiArticle(absoluteUrl) && !visited[*absoluteUrl] {
-							ch <- absoluteUrl
+							ch <- UrlWithParent{absoluteUrl, urlToVisit}
 							visited[*absoluteUrl] = true
 						}
 					}
@@ -49,7 +52,7 @@ func crawl(urlToVisit *url.URL, ch chan *url.URL) {
 
 func getAbsoluteUrl(currentUrl *url.URL, link string) *url.URL {
 	newUrl, err := url.Parse(link)
-	if err != nil || link[0] == '#' { // ignore links to fragments on current page, e.g. "#cite_ref-7"
+	if err != nil || len(link) == 0 || link[0] == '#' { // ignore links to fragments on current page, e.g. "#cite_ref-7"
 		return nil
 	}
 	if !newUrl.IsAbs() { // e.g. "//shop.wikimedia.org"

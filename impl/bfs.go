@@ -1,36 +1,29 @@
 package impl
 
 import (
-	"fmt"
 	"net/url"
 )
 
 func FindPath(startUrl string, endUrl string) ([]string, map[string]string) {
-	queue := make([]*url.URL, 0)
 	urlToParent := make(map[string]string)
 	parsedStartUrl, err := url.Parse(startUrl)
 	if err != nil {
 		panic(err.Error())
 	}
 
-	queue = append(queue, parsedStartUrl)
 	urlToParent[startUrl] = "root"
-	for {
-		urlToVisit := queue[0]
-		queue = queue[1:]
+	ch := make(chan UrlWithParent, 1000)
+	go crawl(parsedStartUrl, ch)
 
-		ch := make(chan *url.URL)
-		go crawl(urlToVisit, ch)
-
-		for link := range ch {
-			if urlToParent[link.String()] == "" {
-				urlToParent[link.String()] = urlToVisit.String()
-				queue = append(queue, link)
+	for nextUrl := range ch {
+		nextUrlString := nextUrl.Url.String()
+		if urlToParent[nextUrlString] == "" {
+			urlToParent[nextUrlString] = nextUrl.ParentUrl.String()
+			if nextUrlString == endUrl {
+				break
+			} else {
+				go crawl(nextUrl.Url, ch)
 			}
-		}
-		if urlToParent[endUrl] != "" {
-			fmt.Println("Found a path!")
-			break
 		}
 	}
 
