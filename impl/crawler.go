@@ -1,7 +1,7 @@
 package impl
 
 import (
-	"fmt"
+	//"fmt"
 	"golang.org/x/net/html"
 	"net/http"
 	"net/url"
@@ -14,7 +14,7 @@ type UrlWithParent struct {
 }
 
 func crawl(urlToVisit *url.URL, ch chan UrlWithParent) {
-	fmt.Printf("Crawling URL: %s\n", urlToVisit.String())
+	//fmt.Printf("Crawling URL: %s\n", urlToVisit.String())
 	resp, err := http.Get(urlToVisit.String())
 	if err != nil {
 		return
