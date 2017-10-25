@@ -1,7 +1,7 @@
 package util
 
 import (
-	"bufio"
+	// "bufio"
 	"log"
 	"os"
 	"path"
@@ -17,6 +17,6 @@ func initLogger() *log.Logger {
 	PanicIfError(err)
 	f, err := os.Create(path.Join(LogDir, LogFilename))
 	PanicIfError(err)
-	writer := bufio.NewWriter(f)
-	return log.New(writer, "", log.Ltime|log.Lmicroseconds)
+	// writer := bufio.NewWriter(f)
+	return log.New(f, "", log.Ltime|log.Lmicroseconds)
 }

@@ -1,10 +1,14 @@
 package impl
 
 import (
+	// "fmt"
 	"github.com/meditativeape/wikiracer/util"
 	"net/url"
+	"runtime"
 	"sync"
 )
+
+var numCrawlersPerLevel int = runtime.NumCPU() * 10
 
 func FindPath(startUrl string, endUrl string) (*[]string, *map[string]string) {
 	urlToParent := make(map[string]string)
@@ -18,18 +22,19 @@ func FindPath(startUrl string, endUrl string) (*[]string, *map[string]string) {
 		return &path, &urlToParent
 	}
 
-	ch := make(chan UrlWithParent, 1)
+	outputCh := make(chan UrlWithParent)
 	var wg sync.WaitGroup
 	wg.Add(1)
-	go crawl(parsedStartUrl, ch, &wg)
-	go closeChannelOnWg(ch, &wg)
-	level := 1
+	go crawlSingleUrlAndSync(parsedStartUrl, outputCh, &wg)
+	go closeChannelOnWg(outputCh, &wg)
+
+	level := 0
 	found := false
 
 	for {
-		var nextWg sync.WaitGroup
-		nextCh := make(chan UrlWithParent, 100000)
-		for urlWithParent := range ch {
+		// collect outputs from crawlers at the current level, and skip URLs that are already visited once
+		toBeCrawled := make([]UrlWithParent, 0)
+		for urlWithParent := range outputCh {
 			nextUrlString := urlWithParent.Url.String()
 			if urlToParent[nextUrlString] == "" {
 				urlToParent[nextUrlString] = urlWithParent.ParentUrl.String()
@@ -37,13 +42,10 @@ func FindPath(startUrl string, endUrl string) (*[]string, *map[string]string) {
 					found = true
 					break
 				} else {
-					nextWg.Add(1)
-					go crawl(urlWithParent.Url, nextCh, &nextWg)
+					toBeCrawled = append(toBeCrawled, urlWithParent)
 				}
 			}
 		}
-		go closeChannelOnWg(nextCh, &nextWg)
-
 		if found {
 			util.Logger.Printf(
 				"Found path while crawling level %d! StartURL: %s, EndURL: %s\n",
@@ -51,18 +53,54 @@ func FindPath(startUrl string, endUrl string) (*[]string, *map[string]string) {
 			break
 		} else {
 			util.Logger.Printf(
-				"Finished crawling level %d. Onto the next level... StartURL: %s, EndURL: %s\n",
-				level, startUrl, endUrl)
+				"Collected %d outputs from crawlers for level %d. StartURL: %s, EndURL: %s\n",
+				len(toBeCrawled), level, startUrl, endUrl)
 			level++
-			ch = nextCh
 		}
+
+		// start a fixed number of goroutines to crawl all URLs at the next level
+		inputCh := make(chan UrlWithParent)
+		nextOutputCh := make(chan UrlWithParent, 1000)
+		var nextWg sync.WaitGroup
+		nextWg.Add(numCrawlersPerLevel)
+		for i := 0; i < numCrawlersPerLevel; i++ {
+			go crawlMultipleUrlsAndSync(inputCh, nextOutputCh, &nextWg)
+		}
+		go closeChannelOnWg(nextOutputCh, &nextWg)
+		util.Logger.Printf(
+			"Started %d crawlers for level %d. StartURL: %s, EndURL: %s\n",
+			numCrawlersPerLevel, level, startUrl, endUrl)
+
+		// start a goroutine to feed URLs into input channel
+		go feedUrlsIntoChannel(toBeCrawled, inputCh)
+		outputCh = nextOutputCh
 	}
 
 	return getPath(&urlToParent, endUrl), &urlToParent
 }
 
+func feedUrlsIntoChannel(urls []UrlWithParent, ch chan UrlWithParent) {
+	for _, url := range urls {
+		ch <- url
+	}
+	close(ch)
+}
+
+func crawlSingleUrlAndSync(urlToCrawl *url.URL, outputCh chan UrlWithParent, wg *sync.WaitGroup) {
+	crawl(urlToCrawl, outputCh)
+	(*wg).Done()
+}
+
+func crawlMultipleUrlsAndSync(inputCh chan UrlWithParent, outputCh chan UrlWithParent, wg *sync.WaitGroup) {
+	for urlToCrawl := range inputCh {
+		crawl(urlToCrawl.Url, outputCh)
+	}
+	(*wg).Done()
+}
+
 func closeChannelOnWg(ch chan UrlWithParent, wg *sync.WaitGroup) {
 	(*wg).Wait()
+	// util.Logger.Printf("All crawlers have finished. Closing channel.\n")
 	close(ch)
 }
 

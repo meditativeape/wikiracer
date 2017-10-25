@@ -1,4 +1,4 @@
-One-way, single-threaded BFS:
+-- One-way, single-threaded BFS:
 Computer_programming -> Google (distance 2): 1.66s
 Computer_programming -> Rice_University (distance 2): 7.77s
 Computer_programming -> Tencent (distance 3): 38.91s
@@ -6,7 +6,7 @@ Computer_programming -> Blade_Runner (distance 3): 40.64s
 Computer_programming -> Nanjing (distance 3): 3m35s
 Computer_programming -> Palantir_Technologies (distance 3): 10m
 
-One-way, parallel BFS:
+-- One-way, parallel BFS:
 Computer_programming -> Google (distance 2): 1.20s
 Computer_programming -> Rice_University (distance 2): 3s
 Computer_programming -> Tencent (distance 3): 3s
@@ -14,59 +14,127 @@ Computer_programming -> Blade_Runner (distance 3): 14.29s
 Computer_programming -> Nanjing (distance 3): 28.71s
 Computer_programming -> Palantir_Technologies (distance 3): 52.60s
 
-Computer_programming -> Palantir_Technologies (min distance 3):
-Run 1: 7m56s
-Run 2: 2m38s
-Run 3: 5m15s
-Path (distance 7):
-		["https://en.wikipedia.org/wiki/Palantir_Technologies",
-        "https://en.wikipedia.org/wiki/Internet_entrepreneur",
-        "https://en.wikipedia.org/wiki/Singularitarianism",
-        "https://en.wikipedia.org/wiki/Manufacturing",
-        "https://en.wikipedia.org/wiki/Programmable_logic_controller",
-        "https://en.wikipedia.org/wiki/Special:WhatLinksHere/Debugging",
-        "https://en.wikipedia.org/wiki/Debugging",
-        "https://en.wikipedia.org/wiki/Computer_programming"]
-Run 4: 3m16s
-Path (distance 5):
-		["https://en.wikipedia.org/wiki/Palantir_Technologies",
-        "https://en.wikipedia.org/wiki/Global_surveillance",
-        "https://en.wikipedia.org/wiki/Cellphone_surveillance",
-        "https://en.wikipedia.org/wiki/Cell_phone",
-        "https://en.wikipedia.org/wiki/Embedded_system",
-        "https://en.wikipedia.org/wiki/Computer_programming"]
-Run 5: 18.8s
-Path (distance 4):
-		["https://en.wikipedia.org/wiki/Palantir_Technologies",
-        "https://en.wikipedia.org/wiki/Palo_Alto,_California#Libraries",
-        "https://en.wikipedia.org/wiki/Special:BookSources/0-201-89551-X",
-        "https://en.wikipedia.org/wiki/Software_design",
-        "https://en.wikipedia.org/wiki/Computer_programming"]
-Run 6: 11.7s
+Computer_programming -> Blade_Runner (min distance 3):
+Run 1: 4.70s
 Path (distance 3):
-		["https://en.wikipedia.org/wiki/Palantir_Technologies",
-        "https://en.wikipedia.org/wiki/Palo_Alto,_California",
-        "https://en.wikipedia.org/wiki/Open-source_software",
-        "https://en.wikipedia.org/wiki/Computer_programming"]
+	["https://en.wikipedia.org/wiki/Blade_Runner",
+    "https://en.wikipedia.org/wiki/Wikipedia:Featured_articles",
+    "https://en.wikipedia.org/wiki/Wikipedia:General_disclaimer",
+    "https://en.wikipedia.org/wiki/Computer_programming"]
+Run 2: 20.78s
+Path (distance 5):
+	["https://en.wikipedia.org/wiki/Blade_Runner",
+    "https://en.wikipedia.org/wiki/Tactical_role-playing_game",
+    "https://en.wikipedia.org/wiki/MUD",
+    "https://en.wikipedia.org/wiki/PLATO_(computer_system)",
+    "https://en.wikipedia.org/wiki/Operating_system",
+    "https://en.wikipedia.org/wiki/Computer_programming"]
+Run 3: 13.59s
+Path (distance 3):
+	["https://en.wikipedia.org/wiki/Blade_Runner",
+    "https://en.wikipedia.org/wiki/Artificial_intelligence_in_fiction",
+    "https://en.wikipedia.org/wiki/Artificial_intelligence",
+    "https://en.wikipedia.org/wiki/Computer_programming"]
+Run 4: 8.88s
+Path (distance 6):
+	["https://en.wikipedia.org/wiki/Blade_Runner",
+    "https://en.wikipedia.org/wiki/Deathrow_(video_game)",
+    "https://en.wikipedia.org/wiki/XIII_(video_game)",
+    "https://en.wikipedia.org/wiki/Category:Articles_using_Wikidata_infoboxes_with_locally_defined_images",
+    "https://en.wikipedia.org/wiki/Dink_Smallwood#Modification",
+    "https://en.wikipedia.org/wiki/List_of_programming_languages",
+    "https://en.wikipedia.org/wiki/Computer_programming"]
 
-One-way, parallel BFS v2 (layered, one goroutine per page, 100k buffer size):
+Computer_programming -> Palantir_Technologies (min distance 3):
+Run 1: 5m15s
+Path (distance 7):
+	["https://en.wikipedia.org/wiki/Palantir_Technologies",
+    "https://en.wikipedia.org/wiki/Internet_entrepreneur",
+    "https://en.wikipedia.org/wiki/Singularitarianism",
+    "https://en.wikipedia.org/wiki/Manufacturing",
+    "https://en.wikipedia.org/wiki/Programmable_logic_controller",
+    "https://en.wikipedia.org/wiki/Special:WhatLinksHere/Debugging",
+    "https://en.wikipedia.org/wiki/Debugging",
+    "https://en.wikipedia.org/wiki/Computer_programming"]
+Run 2: 3m16s
+Path (distance 5):
+	["https://en.wikipedia.org/wiki/Palantir_Technologies",
+    "https://en.wikipedia.org/wiki/Global_surveillance",
+    "https://en.wikipedia.org/wiki/Cellphone_surveillance",
+    "https://en.wikipedia.org/wiki/Cell_phone",
+    "https://en.wikipedia.org/wiki/Embedded_system",
+    "https://en.wikipedia.org/wiki/Computer_programming"]
+Run 3: 18.8s
+Path (distance 4):
+	["https://en.wikipedia.org/wiki/Palantir_Technologies",
+    "https://en.wikipedia.org/wiki/Palo_Alto,_California#Libraries",
+    "https://en.wikipedia.org/wiki/Special:BookSources/0-201-89551-X",
+    "https://en.wikipedia.org/wiki/Software_design",
+    "https://en.wikipedia.org/wiki/Computer_programming"]
+Run 4: 11.7s
+Path (distance 3):
+	["https://en.wikipedia.org/wiki/Palantir_Technologies",
+    "https://en.wikipedia.org/wiki/Palo_Alto,_California",
+    "https://en.wikipedia.org/wiki/Open-source_software",
+    "https://en.wikipedia.org/wiki/Computer_programming"]
+
+-- One-way, parallel BFS v2 (layered, one goroutine per page, 100k buffer size):
 Computer_programming -> Blade_Runner (min distance 3):
 Run 1: 1m25s
 Run 2: 1m16s
 Path (distance 3):
-		["https://en.wikipedia.org/wiki/Blade_Runner",
-        "https://en.wikipedia.org/wiki/Special:WhatLinksHere/Rendering_(computer_graphics)",
-        "https://en.wikipedia.org/wiki/Rendering_(computer_graphics)",
-        "https://en.wikipedia.org/wiki/Computer_programming"]
+	["https://en.wikipedia.org/wiki/Blade_Runner",
+    "https://en.wikipedia.org/wiki/Special:WhatLinksHere/Rendering_(computer_graphics)",
+    "https://en.wikipedia.org/wiki/Rendering_(computer_graphics)",
+    "https://en.wikipedia.org/wiki/Computer_programming"]
 Run 3: 2m22s
 Path (distance 3):
-		["https://en.wikipedia.org/wiki/Blade_Runner",
-        "https://en.wikipedia.org/wiki/Science_fiction",
-        "https://en.wikipedia.org/wiki/Virtual_reality",
-        "https://en.wikipedia.org/wiki/Computer_programming"]
+	["https://en.wikipedia.org/wiki/Blade_Runner",
+    "https://en.wikipedia.org/wiki/Science_fiction",
+    "https://en.wikipedia.org/wiki/Virtual_reality",
+    "https://en.wikipedia.org/wiki/Computer_programming"]
 Run 4: 2m1s
 Path (distance 3):
-		["https://en.wikipedia.org/wiki/Blade_Runner",
-        "https://en.wikipedia.org/wiki/Technology",
-        "https://en.wikipedia.org/wiki/Database_management_system",
-        "https://en.wikipedia.org/wiki/Computer_programming"]
+	["https://en.wikipedia.org/wiki/Blade_Runner",
+    "https://en.wikipedia.org/wiki/Technology",
+    "https://en.wikipedia.org/wiki/Database_management_system",
+    "https://en.wikipedia.org/wiki/Computer_programming"]
+
+-- One-way, parallel BFS v3 (layered, 10 * numCPU goroutines per level, 0 buffer size):
+Computer_programming -> Blade_Runner (min distance 3):
+Run 1: 4.65s
+Path (distance 3):
+	["https://en.wikipedia.org/wiki/Blade_Runner",
+    "https://en.wikipedia.org/wiki/Technology",
+    "https://en.wikipedia.org/wiki/Software_engineering",
+    "https://en.wikipedia.org/wiki/Computer_programming"]
+Run 2: 10.61s
+Path (distance 3):
+	["https://en.wikipedia.org/wiki/Blade_Runner",
+    "https://en.wikipedia.org/wiki/Advertising",
+    "https://en.wikipedia.org/wiki/Software_design",
+    "https://en.wikipedia.org/wiki/Computer_programming"]
+Run 3: 7.31s
+Path (distance 3): same as Run 1
+Run 4: 11.80s
+Path (distance 3): same as Run 2
+Run 5: 10.73s
+Path: same as Run 2
+
+Computer_programming -> Palantir_Technologies (min distance 3):
+Run 1: 1m28s
+Path (distance 3):
+	["https://en.wikipedia.org/wiki/Palantir_Technologies",
+    "https://en.wikipedia.org/wiki/Palo_Alto,_California",
+    "https://en.wikipedia.org/wiki/Open-source_software",
+    "https://en.wikipedia.org/wiki/Computer_programming"]
+Run 2: 1m32s
+Path: same as Run 1
+Run 3: 1m37s
+Path: same as Run 1
+
+-- One-way, parallel BFS v3 (layered, 10 * numCPU goroutines per level, 1000 buffer size, lightweighted logging):
+Computer_programming -> Palantir_Technologies (min distance 3):
+Run 1: 32.75s
+Run 2: 33.26s
+Run 3: 37.53s

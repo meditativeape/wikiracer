@@ -26,7 +26,7 @@ func race(c *gin.Context) {
 	if len(startUrl) == 0 || len(endUrl) == 0 {
 		c.JSON(http.StatusBadRequest, nil)
 	} else {
-		path, _ := impl.FindPath(startUrl, endUrl)
+		path, _ = impl.FindPath(startUrl, endUrl)
 		c.JSON(http.StatusOK, gin.H{
 			"path": path,
 		})

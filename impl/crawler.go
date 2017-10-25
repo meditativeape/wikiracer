@@ -1,12 +1,11 @@
 package impl
 
 import (
-	"github.com/meditativeape/wikiracer/util"
+	// "github.com/meditativeape/wikiracer/util"
 	"golang.org/x/net/html"
 	"net/http"
 	"net/url"
 	"strings"
-	"sync"
 )
 
 type UrlWithParent struct {
@@ -14,18 +13,16 @@ type UrlWithParent struct {
 	ParentUrl *url.URL
 }
 
-func crawl(urlToVisit *url.URL, ch chan UrlWithParent, wg *sync.WaitGroup) {
-	defer (*wg).Done()
-
-	util.Logger.Printf("Crawling article: %s\n", urlToVisit.Path)
-	resp, err := http.Get(urlToVisit.String())
+func crawl(urlToCrawl *url.URL, ch chan UrlWithParent) {
+	// util.Logger.Printf("Crawling article: %s\n", urlToCrawl.Path)
+	resp, err := http.Get(urlToCrawl.String())
 	if err != nil {
 		return
 	}
 	defer resp.Body.Close()
 
 	visited := make(map[url.URL]bool)
-	visited[*urlToVisit] = true
+	visited[*urlToCrawl] = true
 	z := html.NewTokenizer(resp.Body)
 
 	for {
@@ -39,9 +36,9 @@ func crawl(urlToVisit *url.URL, ch chan UrlWithParent, wg *sync.WaitGroup) {
 			if tagType == "a" {
 				for _, attribute := range token.Attr {
 					if attribute.Key == "href" {
-						absoluteUrl := getAbsoluteUrl(urlToVisit, attribute.Val)
+						absoluteUrl := getAbsoluteUrl(urlToCrawl, attribute.Val)
 						if isEnWikiArticle(absoluteUrl) && !visited[*absoluteUrl] {
-							ch <- UrlWithParent{absoluteUrl, urlToVisit}
+							ch <- UrlWithParent{absoluteUrl, urlToCrawl}
 							visited[*absoluteUrl] = true
 						}
 					}
