@@ -13,3 +13,38 @@ Computer_programming -> Tencent (distance 3): 3s
 Computer_programming -> Blade_Runner (distance 3): 14.29s
 Computer_programming -> Nanjing (distance 3): 28.71s
 Computer_programming -> Palantir_Technologies (distance 3): 52.60s
+
+Computer_programming -> Palantir_Technologies (min distance 3):
+Run 1: 7m56s
+Run 2: 2m38s
+Run 3: 5m15s
+Path (distance 7):
+		["https://en.wikipedia.org/wiki/Palantir_Technologies",
+        "https://en.wikipedia.org/wiki/Internet_entrepreneur",
+        "https://en.wikipedia.org/wiki/Singularitarianism",
+        "https://en.wikipedia.org/wiki/Manufacturing",
+        "https://en.wikipedia.org/wiki/Programmable_logic_controller",
+        "https://en.wikipedia.org/wiki/Special:WhatLinksHere/Debugging",
+        "https://en.wikipedia.org/wiki/Debugging",
+        "https://en.wikipedia.org/wiki/Computer_programming"]
+Run 4: 3m16s
+Path (distance 5): 
+		["https://en.wikipedia.org/wiki/Palantir_Technologies",
+        "https://en.wikipedia.org/wiki/Global_surveillance",
+        "https://en.wikipedia.org/wiki/Cellphone_surveillance",
+        "https://en.wikipedia.org/wiki/Cell_phone",
+        "https://en.wikipedia.org/wiki/Embedded_system",
+        "https://en.wikipedia.org/wiki/Computer_programming"]
+Run 5: 18.8s
+Path (distance 4):
+		["https://en.wikipedia.org/wiki/Palantir_Technologies",
+        "https://en.wikipedia.org/wiki/Palo_Alto,_California#Libraries",
+        "https://en.wikipedia.org/wiki/Special:BookSources/0-201-89551-X",
+        "https://en.wikipedia.org/wiki/Software_design",
+        "https://en.wikipedia.org/wiki/Computer_programming"]
+Run 6: 11.7s
+Path (distance 3):
+		["https://en.wikipedia.org/wiki/Palantir_Technologies",
+        "https://en.wikipedia.org/wiki/Palo_Alto,_California",
+        "https://en.wikipedia.org/wiki/Open-source_software",
+        "https://en.wikipedia.org/wiki/Computer_programming"]

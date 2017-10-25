@@ -1,7 +1,7 @@
 package impl
 
 import (
-	//"fmt"
+	"github.com/meditativeape/wikiracer/util"
 	"golang.org/x/net/html"
 	"net/http"
 	"net/url"
@@ -13,8 +13,8 @@ type UrlWithParent struct {
 	ParentUrl *url.URL
 }
 
-func crawl(urlToVisit *url.URL, ch chan UrlWithParent) {
-	//fmt.Printf("Crawling URL: %s\n", urlToVisit.String())
+func crawl(urlToVisit *url.URL, ch chan UrlWithParent, currentPath *[]string) {
+	util.Logger.Printf("Crawling article: %s. Current path is: %s\n", urlToVisit.Path, *currentPath)
 	resp, err := http.Get(urlToVisit.String())
 	if err != nil {
 		return
@@ -47,6 +47,7 @@ func crawl(urlToVisit *url.URL, ch chan UrlWithParent) {
 		}
 	}
 
+	util.Logger.Printf("Finished crawling article: %s", urlToVisit.Path)
 	return
 }
 
