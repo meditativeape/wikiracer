@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"sync"
 )
 
 type UrlWithParent struct {
@@ -13,8 +14,10 @@ type UrlWithParent struct {
 	ParentUrl *url.URL
 }
 
-func crawl(urlToVisit *url.URL, ch chan UrlWithParent, currentPath *[]string) {
-	util.Logger.Printf("Crawling article: %s. Current path is: %s\n", urlToVisit.Path, *currentPath)
+func crawl(urlToVisit *url.URL, ch chan UrlWithParent, wg *sync.WaitGroup) {
+	defer (*wg).Done()
+
+	util.Logger.Printf("Crawling article: %s\n", urlToVisit.Path)
 	resp, err := http.Get(urlToVisit.String())
 	if err != nil {
 		return
@@ -47,7 +50,6 @@ func crawl(urlToVisit *url.URL, ch chan UrlWithParent, currentPath *[]string) {
 		}
 	}
 
-	util.Logger.Printf("Finished crawling article: %s", urlToVisit.Path)
 	return
 }
 

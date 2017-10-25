@@ -14,9 +14,9 @@ var Logger *log.Logger = initLogger()
 
 func initLogger() *log.Logger {
 	err := os.MkdirAll(LogDir, os.ModePerm|os.ModeDir)
-	panicIfError(err)
+	PanicIfError(err)
 	f, err := os.Create(path.Join(LogDir, LogFilename))
-	panicIfError(err)
+	PanicIfError(err)
 	writer := bufio.NewWriter(f)
 	return log.New(writer, "", log.Ltime|log.Lmicroseconds)
 }

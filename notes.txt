@@ -28,7 +28,7 @@ Path (distance 7):
         "https://en.wikipedia.org/wiki/Debugging",
         "https://en.wikipedia.org/wiki/Computer_programming"]
 Run 4: 3m16s
-Path (distance 5): 
+Path (distance 5):
 		["https://en.wikipedia.org/wiki/Palantir_Technologies",
         "https://en.wikipedia.org/wiki/Global_surveillance",
         "https://en.wikipedia.org/wiki/Cellphone_surveillance",
@@ -47,4 +47,26 @@ Path (distance 3):
 		["https://en.wikipedia.org/wiki/Palantir_Technologies",
         "https://en.wikipedia.org/wiki/Palo_Alto,_California",
         "https://en.wikipedia.org/wiki/Open-source_software",
+        "https://en.wikipedia.org/wiki/Computer_programming"]
+
+One-way, parallel BFS v2 (layered, one goroutine per page, 100k buffer size):
+Computer_programming -> Blade_Runner (min distance 3):
+Run 1: 1m25s
+Run 2: 1m16s
+Path (distance 3):
+		["https://en.wikipedia.org/wiki/Blade_Runner",
+        "https://en.wikipedia.org/wiki/Special:WhatLinksHere/Rendering_(computer_graphics)",
+        "https://en.wikipedia.org/wiki/Rendering_(computer_graphics)",
+        "https://en.wikipedia.org/wiki/Computer_programming"]
+Run 3: 2m22s
+Path (distance 3):
+		["https://en.wikipedia.org/wiki/Blade_Runner",
+        "https://en.wikipedia.org/wiki/Science_fiction",
+        "https://en.wikipedia.org/wiki/Virtual_reality",
+        "https://en.wikipedia.org/wiki/Computer_programming"]
+Run 4: 2m1s
+Path (distance 3):
+		["https://en.wikipedia.org/wiki/Blade_Runner",
+        "https://en.wikipedia.org/wiki/Technology",
+        "https://en.wikipedia.org/wiki/Database_management_system",
         "https://en.wikipedia.org/wiki/Computer_programming"]

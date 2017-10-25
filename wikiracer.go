@@ -1,7 +1,6 @@
 package main
 
 import (
-	//"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/meditativeape/wikiracer/impl"
 	"github.com/meditativeape/wikiracer/util"
@@ -23,6 +22,7 @@ func race(c *gin.Context) {
 	endUrl := c.PostForm("endUrl")
 	util.Logger.Printf("[Main] Request received. Start URL: %s, End URL: %s\n", startUrl, endUrl)
 
+	var path *[]string = nil
 	if len(startUrl) == 0 || len(endUrl) == 0 {
 		c.JSON(http.StatusBadRequest, nil)
 	} else {
@@ -33,5 +33,7 @@ func race(c *gin.Context) {
 	}
 
 	elapsed := time.Since(startTime)
-	util.Logger.Printf("[Main] Request served after %s. Start URL: %s, End URL: %s\n", elapsed, startUrl, endUrl)
+	util.Logger.Printf(
+		"[Main] Request served after %s. Start URL: %s, End URL: %s, Path: %s\n",
+		elapsed, startUrl, endUrl, path)
 }
