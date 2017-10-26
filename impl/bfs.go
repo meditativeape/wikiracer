@@ -105,11 +105,17 @@ func closeChannelOnWg(ch chan UrlWithParent, wg *sync.WaitGroup) {
 }
 
 func getPath(urlToParent *map[string]string, endUrl string) *[]string {
-	path := make([]string, 0)
+	reversedPath := make([]string, 0)
 	currentUrl := endUrl
 	for currentUrl != "root" {
-		path = append(path, currentUrl)
+		reversedPath = append(reversedPath, currentUrl)
 		currentUrl = (*urlToParent)[currentUrl]
+	}
+
+	pathLen := len(reversedPath)
+	path := make([]string, pathLen)
+	for i := 0; i < pathLen; i++ {
+		path[i] = reversedPath[pathLen-i-1]
 	}
 	return &path
 }

@@ -8,6 +8,10 @@ import (
 	"strings"
 )
 
+var blacklist = map[string]bool{
+	"/wiki/Special:Random": true,
+}
+
 type UrlWithParent struct {
 	Url       *url.URL
 	ParentUrl *url.URL
@@ -65,7 +69,8 @@ func getAbsoluteUrl(currentUrl *url.URL, link string) *url.URL {
 }
 
 func isEnWikiArticle(urlToCheck *url.URL) bool {
-	if urlToCheck != nil && urlToCheck.Host == "en.wikipedia.org" && strings.HasPrefix(urlToCheck.Path, "/wiki/") {
+	if urlToCheck != nil && urlToCheck.Host == "en.wikipedia.org" &&
+		strings.HasPrefix(urlToCheck.Path, "/wiki/") && !blacklist[urlToCheck.Path] {
 		return true
 	}
 	return false

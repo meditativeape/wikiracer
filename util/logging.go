@@ -7,7 +7,7 @@ import (
 	"path"
 )
 
-const LogDir string = "log"
+const LogDir string = "/tmp/wikiracer/"
 const LogFilename string = "service.log"
 
 var Logger *log.Logger = initLogger()
