@@ -20,6 +20,12 @@
   revision = "1643683e1b54a9e88ad26d98f81400c8c9d9f4f9"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/hashicorp/golang-lru"
+  packages = [".","simplelru"]
+  revision = "0a025b7e63adc15a622f29b0b2c4c3848243bbf6"
+
+[[projects]]
   name = "github.com/mattn/go-isatty"
   packages = ["."]
   revision = "0360b2af4f38e8d38c7fce2a9f4e702702d73a39"
@@ -29,19 +35,19 @@
   branch = "master"
   name = "github.com/ugorji/go"
   packages = ["codec"]
-  revision = "16373bd7016380b084e8a4e8f9560efe82cbc98c"
+  revision = "459bba837a9de7a4d9c58fa5a1171a2a3c96d0d0"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/net"
   packages = ["html","html/atom"]
-  revision = "4b14673ba32bee7f5ac0f990a48f033919fd418b"
+  revision = "c73622c77280266305273cb545f54516ced95b93"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "3e3646d2c706c21b222a5dbcaa6db12b3e0cc765"
+  revision = "b98136db334ff9cb24f28a68e3be3cb6608f7630"
 
 [[projects]]
   name = "gopkg.in/go-playground/validator.v8"
@@ -58,6 +64,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "e8d0949cd9d43b624eee667276a96ef6d663fe85d4290836ef5ca5a55fe67e32"
+  inputs-digest = "930474a982e2b5b1bdae28cb4f181b4f1f2033a06f696ac904c2be701dc82516"
   solver-name = "gps-cdcl"
   solver-version = 1

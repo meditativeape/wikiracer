@@ -138,3 +138,18 @@ Computer_programming -> Palantir_Technologies (min distance 3):
 Run 1: 32.75s
 Run 2: 33.26s
 Run 3: 37.53s
+
+-- With LRU Cache of size 200K:
+Computer_programming -> Blade_Runner:
+Run 1: 12.35s
+Run 2: 5.85s
+Run 3: 4.43s
+Run 4: 1.79s
+Run 5: 1.65s
+
+Computer_programming -> Palantir_Technologies:
+Run 1: 18.62s
+Run 2: 6.03s
+Run 3: 4.48s
+Run 4: 852ms!!
+Run 5: 1.70s
